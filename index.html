@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Área Quadrada</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .areaCalculadora { display: flex; gap: 8px; align-items: center; justify-content: center; }
+        #inputBase, #inputAltura { width: auto; height: 20px; }
+        .areaCalculadora p { font-weight: 600; }
+        .areaCalculadora button { width: auto; height: 26px; }
+        #areaResultado { text-align: center; font-size: 30px; font-weight: 600; }
+        #areaTestes { text-align: center; margin-top: 8px; }
+        #areaTestes li { list-style: none; }
+    </style>
+</head>
+<body>
+    <div class="areaCalculadora">
+        <input id="inputBase" placeholder="Base">
+        <p>x</p>
+        <input id="inputAltura" type="number" placeholder="Altura">
+        <button id="calcular" onclick="calcular()">Calcular Área</button>
+        <button id="limpar" onclick="limpar()">CE</button>
+        <button id="testarCalculo" onclick="testarCalculo()">Teste de Cálculo</button>
+        <button id="testarElementos" onclick="testarElementos()">Teste de Elementos</button>
+    </div>
+
+    <div id="areaResultado"></div>
+
+    <div id="areaTestes"></div>
+
+    <script>
+        // FUNÇÃO PRINCIPAL DE CÁLCULO
+        function calcular() {
+            const valorBase = Number(document.getElementById("inputBase").value);
+            const valorAltura = Number(document.getElementById("inputAltura").value);
+            const calculoArea = valorBase * valorAltura;
+
+            document.getElementById("areaResultado").innerHTML = calculoArea + "m²";
+        }
+
+        // BOTÃO DE LIMPAR ENTRADAS
+        function limpar() {
+            document.getElementById("inputBase").value = "";
+            document.getElementById("inputAltura").value = "";
+            document.getElementById("areaResultado"). innerHTML = "";
+            document.getElementById("areaTestes").innerHTML = "";
+        }        
+
+        // TESTE DE CÁLCULO
+        function testarCalculo() {
+            document.getElementById("inputBase").value = "2";
+            document.getElementById("inputAltura").value = "4";
+
+            calcular();
+
+            const resultadoObtido = document.getElementById("areaResultado").innerHTML;
+            const resultadoEsperado = "8m²";
+
+            if (resultadoObtido != resultadoEsperado) {
+                document.getElementById("areaTestes").innerHTML = "TESTE FALHOU: O resultado esperado era " + resultadoEsperado;
+            } else {
+                document.getElementById("areaTestes").innerHTML = "TESTE PASSOU: O resultado esperado era " + resultadoEsperado + " e foi obtido corretamente!";
+            }
+        }
+
+        // TESTE DE ELEMENTOS DA INTERFACE
+        function testarElementos() {
+            const checklist = [
+                { id: "inputBase", nome: "Campo de Entrada: Base" },
+                { id: "inputAltura", nome: "Campo de Entrada: Altura" },
+                { id: "calcular", nome: "Botão: Calcular Área" },
+                { id: "limpar", nome: "Botão: Limpar (CE)" },
+                { id: "testarCalculo", nome: "Botão: Testar Cálculo" },
+                { id: "testarElementos", nome: "Botão: Teste de Elementos" },
+                { id: "areaResultado", nome: "Div: Resultado da Área" },
+                { id: "areaTestes", nome: "Div: Painel de Testes" }
+            ];
+
+            let listaElementos = "<h3>Teste de Elementos da Interface</h3><ul class='lista-testes'>";
+
+            checklist.forEach(item => {
+                const el = document.getElementById(item.id);
+                if (el) {
+                    listaElementos += `<li>${item.nome} [ID: ${item.id}] - <small>TESTE PASSOU: Elemento encontrado!</small></li>`;
+                } else {
+                    listaElementos += `<li>${item.nome} [ID: ${item.id}] - <small>TESTE NÃO PASSOU: Elemento Não Encontrado!</small></li>`;
+                }
+            });
+
+            listaElementos += "</ul>";
+            document.getElementById("areaTestes").innerHTML = listaElementos;
+        }
+    </script>
+</body>
+</html>
